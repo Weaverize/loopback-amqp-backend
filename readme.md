@@ -52,5 +52,8 @@ where
 - `<id>` is the instance of the model concerned by the change
 - `<type>` is the type of change in `['create','update','remove']`
 
+## Request Emitter
+To generate the request you can use a frontend loopback API server that uses the AMQP connector: https://github.com/Weaverize/loopback-connector-amqp.
+
 # Credit
 Copyright (c) 2018, [Weaverize SAS](http://www.weaverize.com). All rights reserved. Contact: <dev@weaverize.com>.
