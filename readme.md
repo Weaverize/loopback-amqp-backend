@@ -55,5 +55,45 @@ where
 ## Request Emitter
 To generate the request you can use a frontend loopback API server that uses the AMQP connector: https://github.com/Weaverize/loopback-connector-amqp.
 
+# Example
+On a simple loopback server that uses AMQP to provide requests this is an example on how to set the backend up in your `server/server.js`:
+```js
+'use strict';
+
+var loopback = require('loopback');
+var boot = require('loopback-boot');
+var AMQP = require('loopback-amqp-backend');
+
+var app = module.exports = loopback();
+var amqp = null;
+
+var amqpSettings = {
+	'login': 'amqp-user',
+	'password': 'amqp-password',
+	'exchange': 'api',
+	'queue': 'loopback',
+	'binding': 'api'
+};
+
+app.start = function() {
+  // start the web server
+  return app.listen(function() {
+	  amqp = new AMQP(app, amqpSettings, function() {
+		  app.emit('started');
+	  });
+  });
+};
+
+// Bootstrap the application, configure models, datasources and middleware.
+// Sub-apps like REST API are mounted via boot scripts.
+boot(app, __dirname, function(err) {
+  if (err) throw err;
+
+  // start the server if `$ node server.js`
+  if (require.main === module)
+    app.start();
+});
+```
+
 # Credit
 Copyright (c) 2018, [Weaverize SAS](http://www.weaverize.com). All rights reserved. Contact: <dev@weaverize.com>.
