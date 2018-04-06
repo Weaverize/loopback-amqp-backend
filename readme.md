@@ -2,6 +2,12 @@
 Module to process request received and response sent back through AMQP to Loopback.
 This module also broadcasts every changes made to a Model instance to the AMQP exchange.
 
+## Install
+Just run npm
+```
+npm install --save loopback-amqp-backend
+```
+
 ## Settings
 Connectors settings through datasources.json:
 ```json
