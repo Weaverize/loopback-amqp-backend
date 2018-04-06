@@ -1,6 +1,6 @@
 {
   "name": "loopback-amqp-backend",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "Receives actions from AMQP server and plays them in loopback",
   "main": "lib/loopback.js",
   "license": "UNLICENSED",
@@ -9,7 +9,6 @@
     "email": "dev@weaverize.com",
     "url": "http://pro.weaverize.com"
   },
-  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
