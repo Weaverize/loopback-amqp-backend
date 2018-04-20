@@ -9,27 +9,26 @@ npm install --save loopback-amqp-backend
 ```
 
 ## Settings
-Connectors settings through datasources.json:
+To configure this loopback component edit your `component-config.json` file with an adapted version of the following:
+Connectors settings through component-config.json:
 ```json
-"sourcename": {
-    "name": "sourcename",
-    "connector": "amqp",
-    "host": "127.0.0.1",
-    "port": "5672",
-    "login": "user",
-    "password": "password",
-    "exchange": "loopback",
-    "binding" : "loopback",
-    "queue": "loopack"
+{
+	"loopback-amqp-backend": {
+		"host": "localhost",
+		"port": "5672",
+		"login": "",
+		"password": "",
+		"exchange": "loopback",
+		"binding": "loopback",
+		"queue": "loopback"
+	}
 }
 ```
-- `name` is the sourcename of the datasource, use this name in the `model-config.json` file.
-- `connector` should be `"amqp"` as the node module is called `loopback-connector-amqp`
 - `host` (default: `127.0.0.1`) and `port` (default: `5672`) of your AMQP server
 - `login` and `password` to connect to your AMQP server (default is empty)
 - `exchange` name of the AMQP exchange to use (default: `loopback`). If the exchange doesn't exist, it will be created.
-- `queue` prefix to use to name the queue (default: `loopback`). Should create `<queue>-static` and `<queue>-instance`.
-- `binding` prefix binding to use for registering the previous queues on. More about this in the [topics](#topics) section.
+- `queue` prefix to use to name the queue (default: `loopback`).
+- `binding` prefix binding to use for registering the previous queues on.
 
 ## Topics
 Topics are used to receive request and broadcast changes.
@@ -60,46 +59,6 @@ where
 
 ## Request Emitter
 To generate the request you can use a frontend loopback API server that uses the AMQP connector: https://github.com/Weaverize/loopback-connector-amqp.
-
-# Example
-On a simple loopback server that uses AMQP to provide requests this is an example on how to set the backend up in your `server/server.js`:
-```js
-'use strict';
-
-var loopback = require('loopback');
-var boot = require('loopback-boot');
-var AMQP = require('loopback-amqp-backend');
-
-var app = module.exports = loopback();
-var amqp = null;
-
-var amqpSettings = {
-	'login': 'amqp-user',
-	'password': 'amqp-password',
-	'exchange': 'api',
-	'queue': 'loopback',
-	'binding': 'api'
-};
-
-app.start = function() {
-  // start the web server
-  return app.listen(function() {
-	  amqp = new AMQP(app, amqpSettings, function() {
-		  app.emit('started');
-	  });
-  });
-};
-
-// Bootstrap the application, configure models, datasources and middleware.
-// Sub-apps like REST API are mounted via boot scripts.
-boot(app, __dirname, function(err) {
-  if (err) throw err;
-
-  // start the server if `$ node server.js`
-  if (require.main === module)
-    app.start();
-});
-```
 
 # Credit
 Copyright (c) 2018, [Weaverize SAS](http://www.weaverize.com). All rights reserved. Contact: <dev@weaverize.com>.
