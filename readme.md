@@ -37,7 +37,7 @@ The following allows you to send queries.
 ### Payload
 To make a request you have to send a JSON string as AMQP payload. Your request must be a single object containing the following fields:
 - `model`: name of the model to use
-- `id` : 'statis' or instance id of the instance to use
+- `id` : "static" or string instance id of the instance to use
 - `method`: name of the model to apply on the model (if `id` == 'static') or instance of the model (otherwise)
 - `args`: array of arguments to provide, must at least be an empty array if no args.
 - `token` (optional): to make an authenticated request you must provide your access token here.
